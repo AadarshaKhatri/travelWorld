@@ -1,9 +1,9 @@
 
 
-const SeachResultList = () => {
+const SearchResultList = () => {
   return (
     <div>SeachResultList</div>
   )
 }
 
-export default SeachResultList
+export default SearchResultList

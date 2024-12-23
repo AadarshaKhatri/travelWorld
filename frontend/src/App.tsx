@@ -1,11 +1,9 @@
 import './output.css'
-
+import Layouts from './components/Layouts/Layouts'
 function App() {
-  
-
   return (
     <>
-    <h1 className=''>Hello World </h1>
+   <Layouts/>
     </>
   )
 }
