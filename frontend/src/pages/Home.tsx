@@ -1,3 +1,4 @@
+import FeaturedTourList from "../components/FeaturedToursList/FeaturedTourList"
 import SearchBar from "../components/SearchBar/SearchBar"
 import ServiceCard from "../components/ServiceCard/ServiceCard"
 
@@ -52,7 +53,7 @@ const Home = () => {
 
 
       {/* Images  */}
-        <div className="w-[1000px] flex flex-row justify-center items-center mt-10 mx-auto pb-20">
+        <div className="  w-[400px] lg:w-[1000px] flex flex-row justify-center items-center mt-10 mx-auto pb-20">
           <img src = "assets/Teamwork.png" className="flex justify-center text-center"></img>
         </div>
 
@@ -71,7 +72,7 @@ const Home = () => {
           </div>
           
 
-          <div className="flex flex-row mt-20">
+          <div className="flex flex-col px-4 md:flex-row mt-20">
             {/* Card */}
             {
               ServiceData.map((currentElement,index)=>(
@@ -86,8 +87,13 @@ const Home = () => {
             }
 
           </div>
-
         </div>
+        
+
+        {/* Featured List */}
+        <div className="mt-10">
+            <FeaturedTourList/>
+          </div>
 
       </div>
 
