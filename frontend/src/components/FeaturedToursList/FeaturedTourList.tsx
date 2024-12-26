@@ -5,6 +5,7 @@ const FeaturedTourList = () => {
   const TourDetails = [
     
       {
+        "id":0,
         "title": "Westminister Bridge",
         "city": "London",
         "address": "Somewhere in London",
@@ -18,6 +19,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":1,
         "title": "Bali, Indonesia",
         "city": "Bali",
         "address": "Somewhere in Indonesia",
@@ -31,6 +33,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":2,
         "title": "Snowy Mountains, Thailand",
         "city": "Bangkok",
         "address": "Somewhere in Thailand",
@@ -44,6 +47,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":3,
         "title": "Beautiful Sunrise, Thailand",
         "city": "Phuket",
         "address": "Somewhere in Thailand",
@@ -57,6 +61,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":4,
         "title": "Nusa Pendia Bali, Indonesia",
         "city": "Bali",
         "address": "Somewhere in Indonesia",
@@ -70,6 +75,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":5,
         "title": "Cherry Blossoms Spring",
         "city": "Tokyo",
         "address": "Somewhere in Japan",
@@ -83,6 +89,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":6,
         "title": "Holmen Lofoten, France",
         "city": "Paris",
         "address": "Somewhere in France",
@@ -96,6 +103,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":7,
         "title": "Snowy Mountains, Thailand",
         "city": "Bangkok",
         "address": "Somewhere in Thailand",
@@ -109,6 +117,7 @@ const FeaturedTourList = () => {
         "featured": true
       },
       {
+        "id":8,
         "title": "Jaflong, Sylhet",
         "city": "Sylhet",
         "address": "Somewhere in Sylhet",
@@ -122,6 +131,7 @@ const FeaturedTourList = () => {
         "featured": false
       },
       {
+        "id":9,
         "title": "Cox's Bazar Sea Beach",
         "city": "Chittagong",
         "address": "Somewhere in Chittagong",
@@ -151,6 +161,7 @@ const FeaturedTourList = () => {
             
             <TourCard
             key={index}
+            id={currentElement.id}
             title={currentElement.title}
             description={currentElement.desc}
             city={currentElement.city}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 
 interface TourCardProps {
   key:number,
+  id:number,
   title:string,
   city:string,
   address:string,
@@ -60,7 +61,7 @@ const TourCard = (props:TourCardProps) => {
             </div>
 
             <div>
-              <Link to={`/tours/${props.key}`}><button className="bg-yellow-500 text-white p-2 rounded-md cursor-pointer">Book Now</button></Link>
+              <Link to={`/tours/${props.id}`}><button className="bg-yellow-500 text-white p-2 rounded-md cursor-pointer">Book Now</button></Link>
             </div>
 
           </div>
