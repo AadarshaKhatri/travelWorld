@@ -5,7 +5,7 @@ const Pagination = () => {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    const pages = Math.ceil(5 / 8);
+    const pages = Math.ceil(5 / 4);
     setPageCount(pages);
   }, [page]);
 
