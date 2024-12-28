@@ -195,7 +195,13 @@ const TourDetails = () => {
     }
 
     if(value>=13){
+      
       alert("Cannot go above 12");
+      setCredentials((prev)=>({
+        ...prev,
+        membersNo:12,
+      }));
+      
     }
   };
 
