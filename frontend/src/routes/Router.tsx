@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import LogIn from "../pages/LogIn";
 import SearchResultList from "../pages/SeachResultList";
 import About from "../pages/About";
+import BookingConfirm from "../pages/BookingConfirm";
 
 
 const Router = ()=>{
@@ -59,7 +60,11 @@ const Router = ()=>{
       <Route path="/register" element={<SignUp/>} />
       <Route path="/login" element={<LogIn/>} />
       <Route path="/about" element={<About/>}/>
+      <Route path="/booking-confirm" element={<BookingConfirm/>}/>
       <Route path="/tours/search" element={<SearchResultList/>}/>
+
+
+    
     </Routes>
   )
 }

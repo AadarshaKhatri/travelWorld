@@ -1,9 +1,14 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { FaStar } from "react-icons/fa"
 import {  CiLocationOn } from "react-icons/ci";
 import { RiUserLocationFill } from "react-icons/ri";
 import { MdAttachMoney, MdGroups } from "react-icons/md";
 import { GiMonkey } from "react-icons/gi";
+import React, { useRef, useState } from "react";
+
+
+
+
 interface tourData {
   id:number,
   title:string,
@@ -163,14 +168,55 @@ const TourDetails = () => {
       "featured": false
     }
   ]
+
+  const navigate = useNavigate();
+
+  const personRef = useRef<HTMLInputElement | null>(null);
+  const [credentials, setCredentials] = useState({
+    id:"01",
+    userEmail:"adarskahtr1@gmail.com",
+    username:"",
+    membersNo:1,
+    phone:"",
+    booked_date:"",
+  });
+
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value > 0 && value<=12) {
+      setCredentials((prev) => ({
+        ...prev,
+        membersNo: value,
+      }
+    
+    ));
+    }
+
+    if(value>=13){
+      alert("Cannot go above 12");
+    }
+  };
+
+const handleClick = ()=>{
+  console.log("Booked")
+  navigate("/booking-confirm")
+}
+
+
+
   const {id}  = useParams();
 
   //This is a static data; later we will call our API and load the data from the database.
   const tour :tourData | undefined = TourDetails.find((tour)=> tour.id === Number(id));
 
+  const Service_charge = 10;
+  const perPersonPrice = tour ? tour.price * credentials.membersNo : 0;
+  const total_amount = Service_charge + perPersonPrice;
+  
   const options : Intl.DateTimeFormatOptions = {day:'numeric' , month:'long',year:'numeric'}
-  console.log(id);
-  console.log(tour?.id)
+ 
   if(!tour){
     return (
       <div>
@@ -181,10 +227,10 @@ const TourDetails = () => {
   console.log(tour);
   
   return (
-   <section>
-    <div className=" flex flex-col md:flex-row">
+   <section className="overflow-x-hidden">
+    <div className=" flex flex-col md:flex-row min-h-screen justify-center pb-20">
 
-     <div className="md:w-[900px] mx-10 md:ml-20">
+     <div className="md:w-[700px] mx-10 md:ml-20">
       {/* Image Here */}
       <div className="pb-5">
       <img src={tour.photo} alt="Tour Image" className="rounded-t-md"></img>
@@ -290,8 +336,64 @@ const TourDetails = () => {
 
      </div>
 
-     <div className="flex-1">
-        Booking Here
+     <div className="w-[400px] mx-10 md:mx-0 md:mr-10 bg-white  -right-5">
+      <div className="flex flex-col border-2 border-gray-200 p-5 rounded-md ">
+        <h2 className="text-blue-950 text-sm font-semibold">Book Now!</h2>
+
+        <div className="mt-4 flex flex-row justify-between items-center">
+          <div className="">
+            <h2 className="text-2xl font-semibold text-blue-950">$ {tour.price}/per person</h2>
+          </div>
+
+          <div>
+            <h6 className="text-sm flex flex-row gap-1 justify-center items-center"><FaStar className="text-yellow-500"/>{tour.reviews.length}</h6>
+          </div>
+        </div>
+
+
+        <div className="pt-4 pb-4">
+          <hr></hr>
+        </div>
+
+        <div>
+          <h2 className="text-md font-semibold text-blue-950">Information</h2>
+        </div>
+
+
+
+        {/* Booking Form here */}
+
+
+        <form onSubmit={handleClick} className="flex flex-col gap-y-5 ">
+          <input className="w-full outline-none border-b-2 p-2" type="text" placeholder="Enter your full Name"></input>
+          <input className="w-full outline-none border-b-2 p-2" type="number" placeholder="Phone Number"></input>
+
+          <div className="flex flex-row gap-x-2">
+            <input className="w-full outline-none border-b-2 p-2 text-gray-400"  type="date"></input>
+            <input max={12} ref={personRef}  onChange={handleChange} name="guest" className="w-full outline-none border-b-2 p-2" type="number" placeholder="Guests"></input>
+
+          </div>
+
+          {/* Calculation Here */}
+          <div className="flex flex-row justify-between">
+            <h2 className="text-gray-700">$99 x {personRef?.current?.value} person</h2>
+            <h2 className="text-gray-700 font-light">${perPersonPrice}</h2>
+          </div> 
+
+
+          <div className="flex flex-row justify-between">
+            <h2 className="text-gray-700 ">Service Charge</h2>
+            <h2 className="text-gray-700 font-light">${Service_charge}</h2>
+          </div>
+
+          <div className="flex flex-row justify-between">
+            <h2 className="text-blue-950 font-semibold">Total</h2>
+            <h2 className="text-gray-700 font-semibold">${total_amount}</h2>
+          </div>
+          <button  className="w-full bg-primary py-3 text-white cursor-pointer rounded-md">Book</button>
+        </form>
+
+      </div>
      </div>
 
      </div>
