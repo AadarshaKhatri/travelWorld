@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
-import GoogleAuth from "../services/GoogleAuth";
+// import GoogleAuth from "../services/GoogleAuth"; This will be implemented later
 
-import GithubAuth from "../services/GithubAuth";
+// import GithubAuth from "../services/GithubAuth";
 
 const LogIn = () => {
   return (
@@ -30,14 +30,14 @@ const LogIn = () => {
 
 
             {/* OAuth Services */}
-            <div className="flex flex-col space-y-2 py-5">
+            {/* <div className="flex flex-col space-y-2 py-5">
              <GoogleAuth/>
               <GithubAuth/>
-            </div>
+            </div> */}
 
-            <div>
+            <div className="py-4">
+              <h6 className="font-light hover:underline"><Link to='/register'>Don't have an account?</Link></h6>
             </div>
-              <h6><Link to='/register'>Don't have an account?</Link></h6>
             <button className="w-full rounded-md text-white bg-primary py-4" type="submit">Log In</button>
 
           </div>

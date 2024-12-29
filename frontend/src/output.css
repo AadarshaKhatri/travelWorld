@@ -730,6 +730,10 @@ video {
   width: 300px;
 }
 
+.w-\[350px\] {
+  width: 350px;
+}
+
 .w-\[400px\] {
   width: 400px;
 }
@@ -740,10 +744,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-\[350px\] {
-  width: 350px;
 }
 
 .cursor-pointer {
@@ -813,6 +813,12 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
 .overflow-x-hidden {
@@ -987,19 +993,14 @@ video {
   padding-bottom: 0.75rem;
 }
 
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .pb-10 {
@@ -1170,10 +1171,6 @@ video {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-.outline-gray-200 {
-  outline-color: #e5e7eb;
 }
 
 .outline-gray-400 {
