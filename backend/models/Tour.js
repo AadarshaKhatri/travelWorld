@@ -1,4 +1,4 @@
-const  mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const TourSchema  = new mongoose.Schema({
   title:{
@@ -51,5 +51,5 @@ const TourSchema  = new mongoose.Schema({
 const TourModels = mongoose.model("tours",TourSchema);
 
 
-module.exports = TourModels
+export default TourModels
 
