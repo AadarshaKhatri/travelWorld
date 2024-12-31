@@ -4,11 +4,9 @@ const BookingSchema = new mongoose.Schema({
   
   userId:{
     type:String,
-  
   },
   userEmail:{
     type:String,
- 
   },
   tourName:{
     type:String,
@@ -17,7 +15,7 @@ const BookingSchema = new mongoose.Schema({
   },
   fullName:{
     type:String,
-    required:true,
+    require:true,
   },
   guestSize:{
     type:Number,
@@ -27,6 +25,9 @@ const BookingSchema = new mongoose.Schema({
     type:Number,
     required:true,
   },
+  bookAt:{
+    type:String,
+  }
 })
 
 const BookingModel = mongoose.model("bookings",BookingSchema);
