@@ -5,7 +5,9 @@ try{
   const token  = jwt.sign({
     id:user._id,
     email:user.email,
-  },process.env.TOKEN_SECRET,{expiresIn:"24h"})
+  },
+  process.env.TOKEN_SECRET,
+  {expiresIn:"24h"})
 
   return token;
 }

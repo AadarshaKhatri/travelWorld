@@ -6,26 +6,32 @@ import cookieParser from 'cookie-parser';
 import ConnectToDb from './config/db.js'
 import tourRouter from './routes/tour-route.js';
 import UserRouter from './routes/user-route.js';
-// import EventEmitter from 'events';
+import AuthRouter from './routes/auth-route.js';
+import ReviewRouter from './routes/reviews-route.js';
 
 // const bus = new EventEmitter();
 const app = express();
-
+const corsOptions = {
+  origin:true,
+  credentials:true,
+}
 
 // bus.setMaxListeners(20);
 dotenv.config();
 ConnectToDb();
 
 //middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
 //Tours Routes here
 
-app.use("/tours",tourRouter);
-app.use("/users",UserRouter);
+app.use("/api/v1/tours",tourRouter);
+app.use("/api/v1/users",UserRouter);
+app.use("/api/v1/auths",AuthRouter);
+app.use("/api/v1/reviews",ReviewRouter)
 
 const PORT_NUMBER = process.env.PORT ;
 app.listen(PORT_NUMBER , ()=>{

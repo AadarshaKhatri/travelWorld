@@ -4,7 +4,7 @@ import { GenerateToken } from '../utils/TokenGenerator.js';
 
 //========== User Registration ===========
 export const userRegister = async(req,res)=>{
-  const {username,email,password} = req.body;
+  const {username,email,password,photo} = req.body;
    try{
     if(!username || !email || !password){
       res.status(400).json({
@@ -28,18 +28,23 @@ export const userRegister = async(req,res)=>{
       email,
       username,
       password:hashedPassword,
+      photo
     });
+
+   
     
     const JWT_TOKEN = GenerateToken(user);
-    console.log(JWT_TOKEN);
-    res.cookie('token',JWT_TOKEN);
-    res.status(201).json({
+   
+    res.cookie('token',JWT_TOKEN,{
+      httpOnly:true,
+      expires:new Date(Date.now() + 24 * 60 * 60 * 1000),
+    }).status(201).json({
       success:true,
       message:"Successfully created a User",
       token:JWT_TOKEN,
       data:user,
     })
-
+    await user.save();
    } catch(err){
     res.status(500).json({
       success:false,
@@ -74,8 +79,10 @@ export const userLogin = async(req,res)=>{
     const PasswordMatch = await bcrypt.compare(password,FoundUser.password);
     if(PasswordMatch){
       const JWT_TOKEN = GenerateToken(FoundUser);
-      res.cookie("token",JWT_TOKEN);
-      res.status(200).json({
+      res.cookie("token",JWT_TOKEN,{
+          httpOnly:true,
+          expires:new Date(Date.now() + 24 * 60 * 60 * 1000), 
+      }).status(200).json({
         success:true,
         message:"User Successfully Logged In",
         token:JWT_TOKEN,
