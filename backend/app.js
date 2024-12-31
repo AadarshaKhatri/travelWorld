@@ -8,6 +8,7 @@ import tourRouter from './routes/tour-route.js';
 import UserRouter from './routes/user-route.js';
 import AuthRouter from './routes/auth-route.js';
 import ReviewRouter from './routes/reviews-route.js';
+import BookingRouter from './routes/booking-route.js';
 
 // const bus = new EventEmitter();
 const app = express();
@@ -31,7 +32,8 @@ app.use(cookieParser());
 app.use("/api/v1/tours",tourRouter);
 app.use("/api/v1/users",UserRouter);
 app.use("/api/v1/auths",AuthRouter);
-app.use("/api/v1/reviews",ReviewRouter)
+app.use("/api/v1/reviews",ReviewRouter);
+app.use("/api/v1/booking",BookingRouter);
 
 const PORT_NUMBER = process.env.PORT ;
 app.listen(PORT_NUMBER , ()=>{

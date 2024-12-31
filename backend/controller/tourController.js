@@ -31,7 +31,7 @@ export const updateTour = async(req,res)=>{
     }, {
       new:true,
       upsert:true,
-    })
+    }).populate('reviews')
 
     res.status(200).json({
       success:true,
@@ -76,9 +76,7 @@ export const deleteTour = async(req,res)=>{
 export const getSingleTour = async(req,res)=>{
   const id = req.params.id;
   try{
-    const FoundTour = await TourModels.findOne({
-      _id:id
-    });
+    const FoundTour = await TourModels.findById(id).populate('reviews');
 
     res.status(200).json({
       success:true,
@@ -100,7 +98,7 @@ export const getSingleTour = async(req,res)=>{
 export const getAllTour = async(req,res)=>{
   try{
     const page = parseInt(req.query.page);
-    const tours = await TourModels.find({}).skip(page * 8).limit(8);
+    const tours = await TourModels.find({}).skip(page * 8).limit(8).populate('reviews');
     res.status(200).json({
       success:true,
       count:tours.length,
@@ -129,7 +127,7 @@ export const searchTour = async(req,res)=>{
       address:address,
       distances:distance
 
-    })
+    }).populate('reviews')
 
     res.status(200).json({
       success:true,
@@ -153,7 +151,7 @@ export const featureTour = async(req,res)=>{
 
     const FeaturedTour = await TourModels.find({
       featured:true,
-    });
+    }).populate('reviews');
 
     res.status(200).json({
       success:true,
