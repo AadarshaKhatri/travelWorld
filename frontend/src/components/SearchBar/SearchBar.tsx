@@ -1,23 +1,41 @@
 import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaLocationArrow, FaMapLocation, FaUser } from "react-icons/fa6";
+// import { useNavigate } from "react-router-dom";
+import { PostFetchData } from "../../hooks/Fetch";
+
 
 const SearchBar = () => {
-  const destinationRef = useRef<HTMLInputElement | null>(null);
-  const distanceRef = useRef<HTMLInputElement | null>(null);
-  const guestsRef = useRef<HTMLInputElement | null>(null);
+  // const navigate = useNavigate();
+  const destinationRef = useRef<HTMLInputElement | string>(null);
+  const distanceRef = useRef<HTMLInputElement | number>(null);
+  const guestsRef = useRef<HTMLInputElement | number>(null);
 
   // Function to handle submit
-  const handleClick = () => {
-    const destinationValue = destinationRef.current?.value;
-    const distanceValue = distanceRef.current?.value;
-    const guestsValue = guestsRef.current?.value;
+  const handleClick =  () => {
+    
 
-    if (destinationValue === "" || distanceValue === "" || guestsValue === "") {
+    const address = destinationRef.current?.valueOf;
+    const distance = distanceRef.current?.valueOf;
+    const maxGroupSize = guestsRef.current?.valueOf;
+    const res =  PostFetchData("tours/search/getTourBySearch",{
+      address,
+      distance,
+      maxGroupSize,
+    });
+    console.log(res);
+    
+    // navigate(`tours/${res.id}`);
+
+    if (!address || !distance || !maxGroupSize) {
       alert("Every Field must be filled!");
     }
   };
 
+
+ 
+
+  
   return (
     <section className="py-5">
       <div className="flex flex-col sm:flex-row bg-white border border-gray-100 shadow-sm rounded-md p-5 gap-y-5 sm:gap-y-0">
@@ -33,7 +51,7 @@ const SearchBar = () => {
                 ref={destinationRef}
                 className="outline-none  w-full sm:w-auto"
                 type="text"
-                name="destination"
+                name="address"
                 placeholder="Where are you going?"
               />
             </div>
@@ -67,7 +85,7 @@ const SearchBar = () => {
                 ref={guestsRef}
                 className="outline-none  w-full sm:w-auto"
                 type="number"
-                name="guests"
+                name="maxGroupSize"
                 placeholder="0"
               />
             </div>

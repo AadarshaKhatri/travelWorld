@@ -173,7 +173,7 @@ const TourDetails = () => {
 
   const personRef = useRef<HTMLInputElement | null>(null);
   const [credentials, setCredentials] = useState({
-    id:"01",
+    _id:"01",
     userEmail:"adarskahtr1@gmail.com",
     username:"",
     membersNo:1,

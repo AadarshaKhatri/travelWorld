@@ -1,16 +1,15 @@
 
 
 interface ServiceCardProps {
-  key:number,
+
   imgSrc:string,
   title:string,
   description:string,
-
 }
 
 const ServiceCard = (props:ServiceCardProps) => {
   return (
-    <div key={props.key} className="flex flex-row md:flex-col md:w-[300px] gap-x-5
+    <div  className="flex flex-row md:flex-col md:w-[300px] gap-x-5
     md:gap-x-0 justify-center items-center px-5">
 
               <div className="w-[100px] h-[100px]">

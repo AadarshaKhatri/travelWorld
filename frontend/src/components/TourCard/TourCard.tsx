@@ -2,7 +2,7 @@ import { FaLocationArrow, FaStar } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 interface TourCardProps {
-  key:number,
+ 
   id:number,
   title:string,
   city:string,
@@ -18,7 +18,7 @@ interface TourCardProps {
 const TourCard = (props:TourCardProps) => {
   return (
     <section >
-      <div key={props.key} >
+      <div>
         <div className=" relative flex flex-col w-[300px] rounded-md shadow-sm">
 
           {/* Img */}
@@ -47,7 +47,7 @@ const TourCard = (props:TourCardProps) => {
        
 
             <div>
-              <h4 className="flex flex-row items-center gap-4"><FaStar className="text-yellow-500"/>{props.reviews.length}</h4>
+              <h4 className="flex flex-row items-center gap-4"><FaStar className="text-yellow-500"/>({props.reviews.length})</h4>
             </div>
           </div>
 
