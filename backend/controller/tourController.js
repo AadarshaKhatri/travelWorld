@@ -119,7 +119,9 @@ export const getAllTour = async(req,res)=>{
 //========== Get Tour by Search ========== //
 
 export const searchTour = async(req,res)=>{
-  const {address,distance,maxGroupSize} = req.body; //Fix the name of the inputs in the frontend before hitting the API
+  const {address,distance,maxGroupSize} = req.body;
+  console.log(address);
+  //Fix the name of the inputs in the frontend before hitting the API
 
   try{
     const SearchedTour = await TourModels.findOne({
