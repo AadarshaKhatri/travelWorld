@@ -1,8 +1,16 @@
 import { FaLocationArrow, FaStar } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
+interface Review {
+  _id: string;
+  username: string;
+  reviewText: string;
+  ratings: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 interface TourCardProps {
- 
   id:number,
   title:string,
   city:string,
@@ -11,10 +19,12 @@ interface TourCardProps {
   price:number,
   groupSize:number
   description:string,
-  reviews:Array<string>,
+  reviews:Review[],
   photo:string,
   featured:boolean,
 }
+
+
 const TourCard = (props:TourCardProps) => {
   return (
     <section >

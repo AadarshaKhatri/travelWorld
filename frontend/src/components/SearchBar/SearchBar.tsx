@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaLocationArrow, FaMapLocation, FaUser } from "react-icons/fa6";
 // import { useNavigate } from "react-router-dom";
@@ -6,40 +6,42 @@ import { PostFetchData } from "../../hooks/Fetch";
 
 
 const SearchBar = () => {
-  // const navigate = useNavigate();
-  const destinationRef = useRef<HTMLInputElement | string>(null);
-  const distanceRef = useRef<HTMLInputElement | number>(null);
-  const guestsRef = useRef<HTMLInputElement | number>(null);
-
-  // Function to handle submit
-  const handleClick =  () => {
-    
-
-    const address = destinationRef.current?.valueOf;
-    const distance = distanceRef.current?.valueOf;
-    const maxGroupSize = guestsRef.current?.valueOf;
-    const res =  PostFetchData("tours/search/getTourBySearch",{
-      address,
-      distance,
-      maxGroupSize,
-    });
-    console.log(res);
-    
-    // navigate(`tours/${res.id}`);
-
-    if (!address || !distance || !maxGroupSize) {
-      alert("Every Field must be filled!");
-    }
-  };
-
-
- 
+  const addressRef = useRef();
+  const distanceRef = useRef();
+  const maxGroupSizeRef = useRef();
+  const [payload, setPayload] = useState({ address: "", distance: 0, maxGroupSize: 0 });
 
   
+
+  const handleClick = async () => {
+    const address = addressRef.current?.value;
+    const distance = distanceRef.current?.value;
+    const maxGroupSize = maxGroupSizeRef.current?.value;
+
+    setPayload({
+      address:address,
+      distance:distance,
+      maxGroupSize:maxGroupSize
+    })
+  
+    if (!address || distance <= 0 || maxGroupSize <= 0) {
+      alert("All fields must be correctly filled!");
+      return;
+    }
+  
+    try {
+      const res = await PostFetchData("tours/search/getTourBySearch",payload);
+      console.log(res);
+      // navigate(tours/${res.id});
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   return (
     <section className="py-5">
       <div className="flex flex-col sm:flex-row bg-white border border-gray-100 shadow-sm rounded-md p-5 gap-y-5 sm:gap-y-0">
-        <form className="flex flex-col sm:flex-row gap-y-5 sm:gap-y-0 sm:gap-x-10 w-full">
+        <form className="flex flex-col sm:flex-row gap-y-5 sm:gap-y-0 sm:gap-x-10 w-full"
+        >
           {/* Destination */}
           <div className="flex flex-col sm:flex-row items-center gap-x-5 w-full sm:w-auto">
             <FaLocationArrow className="text-primary sm:mr-2" size={24} />
@@ -48,7 +50,7 @@ const SearchBar = () => {
                 Location
               </label>
               <input
-                ref={destinationRef}
+                ref={addressRef}
                 className="outline-none  w-full sm:w-auto"
                 type="text"
                 name="address"
@@ -82,7 +84,7 @@ const SearchBar = () => {
                 Max People
               </label>
               <input
-                ref={guestsRef}
+                ref={maxGroupSizeRef}
                 className="outline-none  w-full sm:w-auto"
                 type="number"
                 name="maxGroupSize"

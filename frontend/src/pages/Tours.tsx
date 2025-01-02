@@ -1,8 +1,18 @@
-
 import Pagination from "../components/Pagination/Pagination"
 import SearchBar from "../components/SearchBar/SearchBar"
 import TourCard from "../components/TourCard/TourCard"
-import { GetFetchData } from "../hooks/Fetch"
+import { useEffect, useState } from "react"
+import { getData } from "../Service/GetService"
+
+interface Review {
+  _id: string;
+  username: string;
+  reviewText: string;
+  ratings: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
 interface DataProps {
   key:number,
@@ -15,19 +25,41 @@ interface DataProps {
   price:number,
   maxGroupSize:number
   description:string,
-  reviews:Array<string>,
+  reviews:Review[],
   photo:string,
   featured:boolean,
 }
 
+
+interface ApiResponse {
+  data: DataProps[]; 
+}
+
+
+
 const Tours = () => {
+  const [data,setData]  = useState<DataProps[]> ();
+
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+      try{
+      const res :ApiResponse = await getData("tours");
+      setData(res.data);
+      console.log(data);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    fetchData();
+  },[]);
   
-  const {data,error,loading} = GetFetchData("/tours");
-  console.log(error);
+ 
+
   return (
     <section>
 
-     {!loading && !error &&  <div>
+<div>
 
 {/* UpperSection */}
 <div className="relative flex flex-row justify-center items-center pb-20">
@@ -76,12 +108,7 @@ const Tours = () => {
   
 </div>
 <Pagination/>
-      </div>}
-
-      {loading && <div className="pb-40">Loading Tours..</div>}
-   
-
-  
+      </div>
     </section>
   )
 }
