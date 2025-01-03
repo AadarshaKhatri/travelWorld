@@ -1,150 +1,56 @@
 import TourCard from "../TourCard/TourCard"
+import { useEffect,useState } from "react"
+import { getData } from "../../Service/GetService"
 
+  interface Reviews{
+    _id: string;
+    username: string;
+    reviewText: string;
+    ratings: number;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }
+
+interface DataProps{
+  _id:number
+  title:string,
+  city:string,
+  address:string,
+  distance:number,
+  price:number,
+  maxGroupSize:number,
+  desc: string,
+  reviews:Reviews[],
+  photo: string,
+  featured:boolean,
+}
+
+interface ApiResponse{
+  data:DataProps[];
+}
 
 const FeaturedTourList = () => {
-  const TourDetails = [
+
+  
+  const [data,setData] = useState<DataProps[]>();
+
     
-      {
-        "id":0,
-        "title": "Westminister Bridge",
-        "city": "London",
-        "address": "Somewhere in London",
-        "distance": 300,
-        "price": 99,
-        "maxGroupSize": 10,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img01.jpg",
-        "featured": true
-      },
-      {
-        "id":1,
-        "title": "Bali, Indonesia",
-        "city": "Bali",
-        "address": "Somewhere in Indonesia",
-        "distance": 400,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img02.jpg",
-        "featured": true
-      },
-      {
-        "id":2,
-        "title": "Snowy Mountains, Thailand",
-        "city": "Bangkok",
-        "address": "Somewhere in Thailand",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img03.jpg",
-        "featured": true
-      },
-      {
-        "id":3,
-        "title": "Beautiful Sunrise, Thailand",
-        "city": "Phuket",
-        "address": "Somewhere in Thailand",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img04.jpg",
-        "featured": true
-      },
-      {
-        "id":4,
-        "title": "Nusa Pendia Bali, Indonesia",
-        "city": "Bali",
-        "address": "Somewhere in Indonesia",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img02.jpg",
-        "featured": true
-      },
-      {
-        "id":5,
-        "title": "Cherry Blossoms Spring",
-        "city": "Tokyo",
-        "address": "Somewhere in Japan",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img01.jpg",
-        "featured": true
-      },
-      {
-        "id":6,
-        "title": "Holmen Lofoten, France",
-        "city": "Paris",
-        "address": "Somewhere in France",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img05.jpg",
-        "featured": true
-      },
-      {
-        "id":7,
-        "title": "Snowy Mountains, Thailand",
-        "city": "Bangkok",
-        "address": "Somewhere in Thailand",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img04.jpg",
-        "featured": true
-      },
-      {
-        "id":8,
-        "title": "Jaflong, Sylhet",
-        "city": "Sylhet",
-        "address": "Somewhere in Sylhet",
-        "distance": 100,
-        "price": 99,
-        "maxGroupSize": 5,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img01.jpg",
-        "featured": false
-      },
-      {
-        "id":9,
-        "title": "Cox's Bazar Sea Beach",
-        "city": "Chittagong",
-        "address": "Somewhere in Chittagong",
-        "distance": 500,
-        "price": 99,
-        "maxGroupSize": 8,
-        "desc": "this is the description",
-        "reviews": [],
-    
-        "photo": "/assets/tour-img03.jpg",
-        "featured": false
-      }
-    ]
+  useEffect(()=>{
+    const fetchData = async()=>{
+    try{
+      const url = "/tours";
+      const res :ApiResponse = await getData(url);
+      console.log(res);
+      setData(res.data);
+
+      console.log(res.data);
+    }catch(err){
+      console.log("Failed to Fetch the data!",err);
+    }
+  }
+  fetchData();
+  },[])
 
   return (
    <section>
@@ -157,11 +63,11 @@ const FeaturedTourList = () => {
 
       <div className="flex flex-col justify-center items-center md:flex-row md:flex-wrap gap-5 mt-10">
         {
-          TourDetails.map((currentElement,index)=>(
+          data?.data?.map((currentElement :DataProps)=>(
             
             <TourCard
-            key={index}
-            id={currentElement.id}
+            key={currentElement._id}
+            id={currentElement._id}
             title={currentElement.title}
             description={currentElement.desc}
             city={currentElement.city}

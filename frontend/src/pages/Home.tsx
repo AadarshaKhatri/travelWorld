@@ -1,6 +1,8 @@
+
 import FeaturedTourList from "../components/FeaturedToursList/FeaturedTourList"
 import SearchBar from "../components/SearchBar/SearchBar"
 import ServiceCard from "../components/ServiceCard/ServiceCard"
+
 
 
 const Home = () => {
@@ -26,6 +28,7 @@ const Home = () => {
       description:"sunt qui repellat saepe quo velit aperiam id aliquam placeat."
     },
   ]
+
   return (
     <section className="pb-20 pt-10">
       <div className="container mx-auto">
