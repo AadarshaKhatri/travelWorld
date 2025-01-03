@@ -2,7 +2,7 @@
 
 const SearchResultList = () => {
   return (
-    <div>SeachResultList</div>
+    <div className="text-black">This is result page</div>
   )
 }
 

@@ -42,9 +42,9 @@ const Tours = () => {
       try {
         const url = "tours/search/getFeaturedTour";
         const res: ApiResponse = await getData(url);
-        console.log(res);
+       
         setData(res.data);
-        console.log(data);
+        
       } catch (err) {
         console.log(err);
       }

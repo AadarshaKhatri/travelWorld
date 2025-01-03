@@ -4,7 +4,7 @@ import Tours from "../pages/Tours";
 import TourDetails from "../pages/TourDetails";
 import SignUp from "../pages/SignUp";
 import LogIn from "../pages/LogIn";
-import SearchResultList from "../pages/SeachResultList";
+import SearchResultList from "../pages/SearchResultList";
 import About from "../pages/About";
 import BookingConfirm from "../pages/BookingConfirm";
 

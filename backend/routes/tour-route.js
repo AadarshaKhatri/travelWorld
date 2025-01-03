@@ -8,7 +8,7 @@ router.put("/:id", adminVerification, updateTour)
 router.delete("/:id",adminVerification, deleteTour)
 router.get("/:id",getSingleTour)
 router.get("/", getAllTour);
-router.post("/search/getTourBySearch", searchTour)
+router.get("/search/getTourBySearch", searchTour)
 router.get("/search/getFeaturedTour", featureTour);
 router.get("/search/getTourCount", getCount);
 

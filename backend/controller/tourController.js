@@ -119,20 +119,25 @@ export const getAllTour = async(req,res)=>{
 //========== Get Tour by Search ========== //
 
 export const searchTour = async(req,res)=>{
-  const {address,distance,maxGroupSize} = req.body;
-  console.log(address);
-  //Fix the name of the inputs in the frontend before hitting the API
 
   try{
     const SearchedTour = await TourModels.findOne({
-      maxGroupSize:maxGroupSize,
-      address:address,
-      distances:distance
-
+    address:req.query.address,
+    distances:req.query.distance,
+    maxGroupSize:req.query.maxGroupSize,
     }).populate('reviews')
 
+
+    if (SearchedTour.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No tours found matching the criteria",
+      });
+    }
+    
     res.status(200).json({
       success:true,
+      count:SearchedTour.length,
       message:"Successfully found the tour",
       data:SearchedTour,
     })
