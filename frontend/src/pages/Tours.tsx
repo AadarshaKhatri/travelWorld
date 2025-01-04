@@ -1,4 +1,4 @@
-import Pagination from "../components/Pagination/Pagination";
+
 import SearchBar from "../components/SearchBar/SearchBar";
 import TourCard from "../components/TourCard/TourCard";
 import { useEffect, useState } from "react";
@@ -38,22 +38,29 @@ interface ApiResponse {
 }
 
 const Tours = () => {
+  const [pageCount, setPageCount] = useState<number>();
+  const [currentPage,setCurrentPage] = useState<number>(1);
   const [data, setData] = useState<ApiResponse>();
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "tours/search/getFeaturedTour";
+        const url =`tours?page=${currentPage}`;
         const res = await getData(url);
-       
         setData(res.data);
-        
+        if (!pageCount) {
+          const totalPages = Math.ceil(res.data.count / 2);
+          setPageCount(totalPages);
+        }
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, []);
+  }, [currentPage]);
+  console.log(data);
 
   return (
     <section>
@@ -98,9 +105,29 @@ const Tours = () => {
             ))}
           </div>
         </div>
+        
 
-        <div></div>
-        <Pagination />
+        {/* Code For pagination */}
+        <section className="overflow-x-hidden">
+          <div className="w-full mx-10 flex flex-row justify-center pb-10">
+    {
+      [...Array(pageCount || 0).keys()].map((number) => (
+        <span
+          key={number}
+          className={`px-2 py-1 cursor-pointer mx-1 ${
+            currentPage === number+1
+              ? "bg-blue-500 text-white rounded"
+              : "bg-gray-200"
+          }`}
+          onClick={() => setCurrentPage(number + 1)} // Adjust to one-based index
+        >
+          {number + 1}
+        </span>
+      ))
+    }
+          </div>
+        </section>
+
       </div>
     </section>
   );

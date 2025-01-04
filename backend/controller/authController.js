@@ -5,9 +5,10 @@ import { GenerateToken } from '../utils/TokenGenerator.js';
 //========== User Registration ===========
 export const userRegister = async(req,res)=>{
   const {username,email,password,photo} = req.body;
+  
    try{
     if(!username || !email || !password){
-      res.status(400).json({
+     return res.status(400).json({
         success:false,
         message:"Input required"
       })
@@ -17,7 +18,7 @@ export const userRegister = async(req,res)=>{
     });
 
     if(ExistingUser){
-      res.status(409).json({
+      return res.status(409).json({
         success:false,
         message:"User already exists. Try again with different credentials",
       })
@@ -35,7 +36,7 @@ export const userRegister = async(req,res)=>{
     
     const JWT_TOKEN = GenerateToken(user);
    
-    res.cookie('token',JWT_TOKEN,{
+    return res.cookie('token',JWT_TOKEN,{
       httpOnly:true,
       expires:new Date(Date.now() + 24 * 60 * 60 * 1000),
     }).status(201).json({
@@ -59,7 +60,7 @@ export const userRegister = async(req,res)=>{
 export const userLogin = async(req,res)=>{
   const{email,password} = req.body;
   if(!email || !password){
-    res.status(400).json({
+    return res.status(400).json({
       success:false,
       message:"Email or Password is required",
     })
@@ -70,7 +71,7 @@ export const userLogin = async(req,res)=>{
     });
 
     if(!FoundUser){
-      res.status(404).json({
+      return res.status(404).json({
         success:false,
         message:"Username or Password is Incorrect",
       })
@@ -79,7 +80,7 @@ export const userLogin = async(req,res)=>{
     const PasswordMatch = await bcrypt.compare(password,FoundUser.password);
     if(PasswordMatch){
       const JWT_TOKEN = GenerateToken(FoundUser);
-      res.cookie("token",JWT_TOKEN,{
+      return res.cookie("token",JWT_TOKEN,{
           httpOnly:true,
           expires:new Date(Date.now() + 24 * 60 * 60 * 1000), 
       }).status(200).json({

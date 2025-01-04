@@ -1,9 +1,29 @@
 import {Link} from "react-router-dom";
+import {useRef} from 'react';
+import { postData } from "../Service/GetService";
 // import GoogleAuth from "../services/GoogleAuth"; This will be implemented later
 
 // import GithubAuth from "../services/GithubAuth";
 
+
 const LogIn = () => {
+  const emailRef= useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null)
+
+
+  const handleSubmit = async(e : React.FormEvent)=>{
+    e.preventDefault(); 
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    const res = await postData("auths/login",{
+      email,
+      password,
+    });
+    console.log(res.data);
+    if(res.data){
+      alert("Logged In")
+    }
+  }
   return (
     <section className="py-10">
       <div className="flex flex-col justify-center items-center gap-y-5">
@@ -14,19 +34,19 @@ const LogIn = () => {
               <h5 className="text-md text-blue-950">to start booking.</h5>
             </div>
 
-          <form className="">
+          <form onSubmit={handleSubmit} method="post">
             <div className="flex flex-col mt-5">
 
-            {/* Username */}
+            {/* email */}
 
-            <label htmlFor="username">Username</label>
-            <input className="p-4  border border-gray-200 outline-gray-400 rounded-md" name="username" type = 'text' placeholder="Enter your Username"></input>
+            <label htmlFor="email">Email</label>
+            <input ref={emailRef} className="p-4  border border-gray-200 outline-gray-400 rounded-md" name="email" type = 'email' placeholder="Enter your email"></input>
 
             {/* Password */}
 
             <label htmlFor="password">Password</label>
 
-            <input name="password" className="p-4 border border-gray-200 outline-gray-400 rounded-md" type = "password" placeholder="Enter your password"></input>
+            <input ref={passwordRef} name="password" className="p-4 border border-gray-200 outline-gray-400 rounded-md" type = "password" placeholder="Enter your password"></input>
 
 
             {/* OAuth Services */}

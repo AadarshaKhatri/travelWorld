@@ -1,10 +1,6 @@
 import axios from 'axios';
 
-interface PayloadProps{
-  address:string,
-  distance:number,
-  maxGroupSize:number,
-}
+
 const app = axios.create({
   baseURL:"http://localhost:9999/api/v1/"
 });
@@ -13,7 +9,7 @@ export function getData(url : string){
   return app.get(url);
 }
 
-export function postData(url:string, data:PayloadProps){
+export function postData(url:string,data){
   return app.post(url,data)
 }
 

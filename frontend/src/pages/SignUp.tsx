@@ -1,6 +1,24 @@
-
+import {useRef} from 'react';
 import { Link } from "react-router-dom"
-const SignUp = () => {
+import {postData} from '../Service/GetService';
+const SignUp : React.FC = () => {
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const usernameRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  
+  const handleSubmit = async(e:React.FormEvent)=>{
+    e.preventDefault();
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    const username = usernameRef.current?.value;
+    const res = await postData("auths/register",{
+      email,
+      password,
+      username,
+    });
+    console.log(res.data);
+    
+  }
   return (
     <section className="py-10">
 
@@ -14,24 +32,24 @@ const SignUp = () => {
 
 
 
-          <form>
+          <form onSubmit={handleSubmit} method="post">
           <div className="flex flex-col mt-5 space-y-3">
             {/* Email */}
 
             <label htmlFor="email">Email</label>
 
-            <input name="email" className="p-4 border border-gray-200 outline-gray-400 rounded-md" type="email" placeholder="Enter your email"></input>
+            <input ref={emailRef} name="email" className="p-4 border border-gray-200 outline-gray-400 rounded-md" type="email" placeholder="Enter your email"></input>
 
 
             {/* Username */}
 
             <label htmlFor="username">Username</label>
-            <input className="p-4 border border-gray-200 outline-gray-400 rounded-md " type = 'text' placeholder="Enter your Username"></input>
+            <input ref={usernameRef} className="p-4 border border-gray-200 outline-gray-400 rounded-md " type = 'text' placeholder="Enter your Username"></input>
 
             {/* Password */}
 
             <label htmlFor="password">Password</label>
-            <input name="password" className="p-4 border border-gray-200 rounded-md" type = "password" placeholder="Enter your password"></input>
+            <input ref={passwordRef} name="password" className="p-4 border border-gray-200 rounded-md" type = "password" placeholder="Enter your password"></input>
 
             {/* OAuth Services */}
             {/* <div>
@@ -43,7 +61,7 @@ const SignUp = () => {
             </div>
 
 
-            <button className="w-full py-4 rounded-md bg-primary text-white" type="submit">Create an Account</button>
+            <button type="submit" className="w-full py-4 rounded-md bg-primary text-white" >Create an Account</button>
           </div>
           </form>
         </div>  
