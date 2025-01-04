@@ -125,13 +125,17 @@ export const searchTour = async(req,res)=>{
     address:req.query.address,
     distances:req.query.distance,
     maxGroupSize:req.query.maxGroupSize,
-    }).populate('reviews')
+    }).populate('reviews');
+
+    const AllTours = await TourModels.find().populate('reviews');
+  
 
 
-    if (SearchedTour.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No tours found matching the criteria",
+    if (!SearchedTour) {
+      return res.status(200).json({
+        success: true,
+        message: "No Results Found!",
+        data:AllTours,
       });
     }
     

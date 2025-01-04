@@ -31,17 +31,20 @@ interface DataProps {
 }
 
 interface ApiResponse {
+  success:boolean,
+  count:number,
+  message:string,
   data: DataProps[];
 }
 
 const Tours = () => {
-  const [data, setData] = useState<DataProps[]>();
+  const [data, setData] = useState<ApiResponse>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const url = "tours/search/getFeaturedTour";
-        const res: ApiResponse = await getData(url);
+        const res = await getData(url);
        
         setData(res.data);
         
