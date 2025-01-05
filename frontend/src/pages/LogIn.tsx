@@ -1,27 +1,40 @@
 import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {useRef} from 'react';
 import { postData } from "../Service/GetService";
+import { useContext } from "react";
+import { AuthContext } from "../components/ProtectedRouting/Protected";
+
 // import GoogleAuth from "../services/GoogleAuth"; This will be implemented later
 
 // import GithubAuth from "../services/GithubAuth";
 
 
 const LogIn = () => {
+  const {dispatch} = useContext(AuthContext);
+  const navigate = useNavigate();
   const emailRef= useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null)
 
 
   const handleSubmit = async(e : React.FormEvent)=>{
     e.preventDefault(); 
+    dispatch({type:"LOGIN_START"});
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
-    const res = await postData("auths/login",{
-      email,
-      password,
-    });
-    console.log(res.data);
-    if(res.data){
-      alert("Logged In")
+    try{
+      const res = await postData("auths/login",{
+        email,
+        password,
+      });
+      dispatch({type:"LOGIN_SUCCESS",payload:res.data});
+      if(res.data){
+      navigate('/');
+      }
+      
+    }catch(err){
+      dispatch({type:"LOGIN_FAIL"})
+      console.log("Error Logging in",err);
     }
   }
   return (

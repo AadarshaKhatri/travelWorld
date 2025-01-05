@@ -1,7 +1,13 @@
 import {useRef} from 'react';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {postData} from '../Service/GetService';
+import {useContext} from 'react';
+import { AuthContext } from '../components/ProtectedRouting/Protected';
+
 const SignUp : React.FC = () => {
+  
+  const navigate = useNavigate();
+  const {dispatch} = useContext(AuthContext);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -17,6 +23,8 @@ const SignUp : React.FC = () => {
       username,
     });
     console.log(res.data);
+    dispatch({type:"REGISTER_SUCCESS"})
+    navigate("/login");
     
   }
   return (

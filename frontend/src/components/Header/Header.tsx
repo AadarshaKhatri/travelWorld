@@ -1,11 +1,20 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoIosMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../ProtectedRouting/Protected";
+
+
 
 
 const Header = () => {
+  const {user,dispatch}  = useContext(AuthContext);
+  const navigate = useNavigate();
+  const logout = ()=>{
+    dispatch({type:"LOGOUT"});
+    navigate("/")
+  }
   const HeadersList = [
     {
       path:"/home",
@@ -56,7 +65,17 @@ const Header = () => {
       }
       </nav>
 </div>
-      <div className="flex flex-row gap-x-5">
+
+      {/* Buttons Here - Right Side of the Nav Bar */}
+      {
+        user ? 
+        <div className="flex flex-row justify-center items-center gap-5">
+          <h5 className="text-black">Welcome, {user?.data.username}</h5>
+          <button onClick={logout} className="py-2 px-3 text-white bg-red-600 rounded-md">LogOut</button>
+        </div>
+        :
+
+        <div className="flex flex-row gap-x-5">
       <Link to = "/register"><button 
           className="text-white bg-primary py-3 px-1 rounded-lg"
           >Get Started for free
@@ -66,6 +85,8 @@ const Header = () => {
           >Log In
           </button></Link>
       </div>
+      }
+      
 
 
       </div>

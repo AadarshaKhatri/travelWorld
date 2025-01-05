@@ -7,6 +7,7 @@ import LogIn from "../pages/LogIn";
 import SearchResultList from "../pages/SearchResultList";
 import About from "../pages/About";
 import BookingConfirm from "../pages/BookingConfirm";
+import { ProtectedRotues } from "../hooks/ProtectedRoutes";
 
 
 const Router = ()=>{
@@ -14,14 +15,14 @@ const Router = ()=>{
   return(
     <Routes>
       <Route path="/" element={<Navigate to="/home"/>}/>
-      <Route path="/home" element={<Home/>} />
-      <Route path="/tours" element={<Tours/>} />
-      <Route path="/tours/:id" element={<TourDetails/>} />
+      <Route path="/home" element={<ProtectedRotues><Home/></ProtectedRotues>} />
+      <Route path="/tours" element={<ProtectedRotues><Tours/></ProtectedRotues>} />
+      <Route path="/tours/:id" element={<ProtectedRotues children={<TourDetails/>}/>} />
       <Route path="/register" element={<SignUp/>} />
       <Route path="/login" element={<LogIn/>} />
-      <Route path="/about" element={<About/>}/>
-      <Route path="/booking-confirm" element={<BookingConfirm/>}/>
-      <Route path="/tours/search" element={<SearchResultList/>}/>
+      <Route path="/about" element={<ProtectedRotues><About/></ProtectedRotues>}/>
+      <Route path="/booking-confirm" element={<ProtectedRotues><BookingConfirm/></ProtectedRotues>}/>
+      <Route path="/tours/search" element={<ProtectedRotues children = {<SearchResultList/>}/>}/>
 
 
     
