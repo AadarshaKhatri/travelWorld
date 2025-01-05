@@ -10,47 +10,7 @@ import BookingConfirm from "../pages/BookingConfirm";
 
 
 const Router = ()=>{
-  // const routes = createBrowserRouter([
-  //   {
-  //     path: "/home",
-  //     element: <Home />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/",
-  //     element: <Navigate to="/home" replace />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/tours",
-  //     element: <Tours />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/tours/:id",
-  //     element: <TourDetails />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/login",
-  //     element: <LogIn />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/register",
-  //     element: <SignUp />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/tours/search",
-  //     element: <SearchResultList />,
-  //     errorElement: <div>Error Loading Route</div>,
-  //   },
-  //   {
-  //     path: "/*",
-  //     element: <div>Not Found</div>,
-  //   },
-  // ])
+
   return(
     <Routes>
       <Route path="/" element={<Navigate to="/home"/>}/>
