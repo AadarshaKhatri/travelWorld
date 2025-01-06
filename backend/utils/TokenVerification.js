@@ -3,7 +3,8 @@ import UserModel from '../models/User.js';
 
 export const tokenVerification = async (req,res,next)=>{
 
-  if(!req.cookies.token){
+  const token = localStorage.getItem('user');
+  if(!token){
     return res.status(401).json({
       success:false,
       message:"Invalid Token",
@@ -35,6 +36,9 @@ export const tokenVerification = async (req,res,next)=>{
 export const userVerification = async(req,res,next)=>{
   tokenVerification(req,res,next,()=>{
     if(req.user.id === req.params.id || req.user.role === "user"){
+
+      console.log(req.user.id);
+      console.log(req.params.id);
       next();
     }else{
       res.status(401).json({

@@ -5,7 +5,8 @@ import { CiLocationOn } from "react-icons/ci";
 import { RiUserLocationFill } from "react-icons/ri";
 import { MdAttachMoney, MdGroups } from "react-icons/md";
 import { GiMonkey } from "react-icons/gi";
-import { getData } from "../Service/GetService";
+import { getData,postData } from "../Service/GetService";
+
 
 
 interface Review {
@@ -41,6 +42,9 @@ const TourDetails: React.FC = () => {
   const [tour, setTour] = useState<ResponseTypes | null>(null);
   const navigate = useNavigate();
   const { id } = useParams();
+  const fullnameRef = useRef<HTMLInputElement | null>(null);
+  const dateRef = useRef<HTMLInputElement | null>(null);
+  const phoneNumberRef = useRef<HTMLInputElement | null>(null);
   const personRef = useRef<HTMLInputElement | null>(null);
   const [maxGuests, setMaxGuests] = useState(1);
 
@@ -67,11 +71,33 @@ const TourDetails: React.FC = () => {
     }
   };
 
-  const handleClick = (e: React.FormEvent) => {
+  const tourTitle = tour?.data.title
+
+  const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booked");
-    navigate("/booking-confirm");
+    const fullname = fullnameRef.current?.value;
+    const phoneNumber = phoneNumberRef.current?.value;
+    const date = dateRef.current?.value;
+    const person = personRef.current?.value;
+
+    if(!fullname || !phoneNumber || !date || !person){
+      alert("All Fields Required!")
+
+    }
+
+  const res = await postData(`booking/${id}`,{
+    tourName:tourTitle,
+    fullName:fullname,
+    phone:phoneNumber,
+    bookAt:date,
+    guestSize:person,
+    });
+    if(res.data){
+      navigate("/booking-confirm")
+    }
+    console.log(res.data);
   };
+
 
   const serviceCharge = 10;
   const perPersonPrice = tour ? tour.data.price * maxGuests : 0;
@@ -135,6 +161,8 @@ const TourDetails: React.FC = () => {
             <h2 className="text-blue-950 font-semibold text-xl">
               Reviews ({tour?.data.reviews.length})
             </h2>
+
+            {/*   Form Here */}
             <form className="flex gap-2 mt-5">
               <input
                 type="text"
@@ -184,23 +212,31 @@ const TourDetails: React.FC = () => {
               </h6>
             </div>
             <hr className="my-4" />
+
+
             <form onSubmit={handleClick} className="flex flex-col gap-4">
               <input
+                ref = {fullnameRef}
+                name="fullname"
                 className="border-b-2 p-2 outline-none"
                 type="text"
                 placeholder="Enter your full name"
               />
               <input
+                ref = {phoneNumberRef}
+                name = "phoneNumber"
                 className="border-b-2 p-2 outline-none"
                 type="number"
                 placeholder="Phone number"
               />
               <div className="flex gap-2">
                 <input
+                 ref= {dateRef}
                   className="border-b-2 p-2 outline-none"
                   type="date"
                 />
                 <input
+                  name = "guestSize"
                   ref={personRef}
                   onChange={handleChange}
                   className="border-b-2 p-2 outline-none"

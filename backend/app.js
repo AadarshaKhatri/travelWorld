@@ -1,7 +1,6 @@
 import express, { application } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import ConnectToDb from './config/db.js'
 import tourRouter from './routes/tour-route.js';

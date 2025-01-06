@@ -1,5 +1,5 @@
 
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../components/ProtectedRouting/Protected";
 import { useContext } from "react";
 
