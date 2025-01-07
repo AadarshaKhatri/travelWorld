@@ -72,7 +72,7 @@ const TourDetails: React.FC = () => {
   };
 
   const tourTitle = tour?.data.title
-
+  console.log(tourTitle);
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
     const fullname = fullnameRef.current?.value;

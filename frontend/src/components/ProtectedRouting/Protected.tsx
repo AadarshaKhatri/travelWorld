@@ -1,8 +1,10 @@
 import { createContext, useEffect, useReducer, ReactNode, Dispatch } from "react";
 
+
 // Define the shape of the state
 interface StateType {
   user: any;
+
   loading: boolean;
   error: any;
 }
@@ -11,11 +13,13 @@ interface StateType {
 interface ActionType {
   type: string;
   payload?: any;
+  token?:any,
 }
 
 // Initial state
 const initial_state: StateType = {
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null,
+
   loading: false,
   error: null,
 };
@@ -36,30 +40,35 @@ const AuthReducer = (state: StateType, action: ActionType): StateType => {
   switch (action.type) {
     case "LOGIN START":
       return {
+     
         user: null,
         loading: true,
         error: null,
       };
     case "LOGIN_SUCCESS":
       return {
+      
         user: action.payload,
         loading: false,
         error: null,
       };
     case "LOGIN_FAIL":
       return {
+
         user: null,
         loading: false,
         error: action.payload,
       };
     case "REGISTER_SUCCESS":
       return {
+
         user: action.payload,
         loading: false,
         error: null,
       };
     case "LOGOUT":
       return {
+
         user: null,
         loading: false,
         error: null,
@@ -75,6 +84,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   // Save user to localStorage whenever it changes
   useEffect(() => {
+   
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
 

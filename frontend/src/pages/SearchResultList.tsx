@@ -58,7 +58,7 @@ const SearchResultList = () => {
 
     <div className="flex flex-col mx-10 gap-y-5">
       <div>
-          <h2 className="text-4xl text-blue-950">Your search for "address over here"</h2>
+          <h2 className="text-4xl text-blue-950">Your search for {location.state.address.trim()}</h2>
           <hr className="mb-2 mt-2  border-gray-500"></hr>
 
           <div className="mt-3">
@@ -98,7 +98,7 @@ const SearchResultList = () => {
     : 
     <div className="flex flex-col mx-10 gap-y-5">
       <div>
-          <h2 className="text-4xl text-blue-950">Your search for "address over here"</h2>
+          <h2 className="text-4xl text-blue-950">Your search for {location.state.address.trim()}</h2>
           <hr className="mb-2 mt-2  border-gray-500"></hr>
 
           <div className="mt-3">

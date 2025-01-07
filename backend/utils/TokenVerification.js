@@ -2,9 +2,7 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../models/User.js';
 
 export const tokenVerification = async (req,res,next)=>{
-
-  const token = localStorage.getItem('user');
-  if(!token){
+  if(!res.cookies){
     return res.status(401).json({
       success:false,
       message:"Invalid Token",

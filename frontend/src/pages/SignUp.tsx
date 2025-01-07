@@ -23,7 +23,7 @@ const SignUp : React.FC = () => {
       username,
     });
     console.log(res.data);
-    dispatch({type:"REGISTER_SUCCESS"})
+    dispatch({type:"REGISTER_SUCCESS"});
     navigate("/login");
     
   }

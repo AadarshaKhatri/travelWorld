@@ -27,20 +27,22 @@ interface DataProps{
 }
 
 interface ApiResponse{
+  success:boolean,
+  message:string,
   data:DataProps[];
 }
 
 const FeaturedTourList = () => {
 
   
-  const [data,setData] = useState<DataProps[]>();
+  const [data,setData] = useState<ApiResponse>();
 
     
   useEffect(()=>{
     const fetchData = async()=>{
     try{
       const url = "/tours";
-      const res :ApiResponse = await getData(url);
+      const res = await getData(url);
       console.log(res);
       setData(res.data);
 
