@@ -37,17 +37,40 @@ interface ResponseTypes{
   message:string,
   data:DataProps,
 }
+interface UserProps{
+  createdAt:string,
+  email:string,
+  password:string,
+  role:string,
+  updatedAt:string,
+  username:string,
+}
+interface localStorageProps {
+  success:boolean,
+  token:string,
+  message:string,
+  data:UserProps,
+}
 
 const TourDetails: React.FC = () => {
+  
   const [tour, setTour] = useState<ResponseTypes | null>(null);
+
   const navigate = useNavigate();
   const { id } = useParams();
+  const reviewRef =useRef<HTMLInputElement | null>(null);
   const fullnameRef = useRef<HTMLInputElement | null>(null);
   const dateRef = useRef<HTMLInputElement | null>(null);
   const phoneNumberRef = useRef<HTMLInputElement | null>(null);
   const personRef = useRef<HTMLInputElement | null>(null);
   const [maxGuests, setMaxGuests] = useState(1);
+  const user: localStorageProps = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user") as string)
+  : null;
 
+ 
+
+  console.log(user);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,7 +95,8 @@ const TourDetails: React.FC = () => {
   };
 
   const tourTitle = tour?.data.title
-  console.log(tourTitle);
+  const username = user?.data.username;
+  console.log(tour);
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
     const fullname = fullnameRef.current?.value;
@@ -111,6 +135,22 @@ const TourDetails: React.FC = () => {
 
   if (!tour?.data) {
     return <div>Tour Not Found</div>;
+  }
+
+  const handleReviewSubmit = async (e : React.FormEvent)=>{
+    e.preventDefault();
+    const review  = reviewRef.current?.value;
+    const res = await postData(`reviews/${id}`,{
+      reviewText:review,
+      username:username,
+    });
+    if(!res.data){
+      alert("Failed to post review");
+    }else{
+      alert("Your Review have been submitted!")
+      window.location.reload();
+    }
+    
   }
 
   return (
@@ -163,13 +203,15 @@ const TourDetails: React.FC = () => {
             </h2>
 
             {/*   Form Here */}
-            <form className="flex gap-2 mt-5">
+            <form onSubmit={handleReviewSubmit} className="flex gap-2 mt-5">
               <input
+              ref = {reviewRef}
                 type="text"
                 placeholder="Share your thoughts here"
                 className="flex-grow border-b-2 outline-none"
               />
               <button
+
                 type="submit"
                 className="px-4 py-2 bg-primary text-white rounded-md"
               >
@@ -183,22 +225,27 @@ const TourDetails: React.FC = () => {
               <div key={review._id} className="flex gap-5 py-5">
                 <GiMonkey size={42} />
                 <div>
-                  <h2 className="text-md font-semibold">
-                    {review.username}{" "}
-                    <span className="text-sm text-gray-400">
-                      {new Date(review.createdAt).toLocaleDateString(
-                        "en-US",
-                        dateFormatOptions
-                      )}
-                    </span>
-                  </h2>
+                  <div className="flex flex-row gap-x-2 justify-start items-center">
+                      <h2 className="text-md font-semibold">
+                        {review.username}
+                      
+                      </h2>
+                      <h4 className="text-sm text-gray-400 ">
+                          {new Date(review.createdAt).toLocaleDateString(
+                            "en-US",
+                            dateFormatOptions
+                          )}
+                        </h4>
+                    </div>
                   <p className="text-sm text-gray-600">{review.reviewText}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        
 
+        {/* Left Side */}
         <div className="w-[400px] mx-10 md:mr-10">
           <div className="p-5 border-2 border-gray-200 rounded-md">
             <h2 className="text-sm font-semibold text-blue-950">Book Now!</h2>
